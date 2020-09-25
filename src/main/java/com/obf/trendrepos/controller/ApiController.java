@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/trendRepos")
+@RequestMapping("/api/trendReposLang")
 public class ApiController {
 
     @Autowired
@@ -14,6 +14,7 @@ public class ApiController {
     @GetMapping("")
     public String getTrendLang(){
 
-        return trendReposService.reposToString(trendReposService.getReposFromGithubApi());
+        return trendReposService.getTrendReposLangs().toString();
     }
+
 }

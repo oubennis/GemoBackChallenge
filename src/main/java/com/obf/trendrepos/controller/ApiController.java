@@ -25,4 +25,10 @@ public class ApiController {
         return "Number of trending repos using "+language +" = "+ count;
     }
 
+    @RequestMapping(value = "listRepos/{language}", method = RequestMethod.GET)
+    public String getReposTrendListByLang(@PathVariable("language") String language){
+
+        return trendReposService.reposToString(trendReposService.getReposTrendListByLang(language));
+    }
+
 }

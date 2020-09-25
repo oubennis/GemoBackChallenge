@@ -53,6 +53,16 @@ public class TrendReposService {
         return repos.stream().filter(item -> language.equalsIgnoreCase(item.getLanguage())).count();
     }
 
+    public List<Item> getReposTrendListByLang(String language){
+
+        List<Item> repos = getReposFromGithubApi();
+
+        if (language == null || repos == null)
+            return Collections.EMPTY_LIST;
+
+        return repos.stream().filter(item -> language.equalsIgnoreCase(item.getLanguage())).collect(Collectors.toList());
+    }
+
     public String reposToString(List<Item> repos){
         if(repos.isEmpty())
             return "No repo found !";

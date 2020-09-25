@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TrendReposService {
@@ -32,6 +33,35 @@ public class TrendReposService {
         return new ArrayList<>();
     }
 
+    public List<String> getTrendReposLangs(){
+
+        List<Item> repos = getReposFromGithubApi();
+
+        return repos.stream().filter(item -> item.getLanguage()!=null)
+                .map(Item::getLanguage)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    public long getReposTrendCountByLang(String language){
+
+        List<Item> repos = getReposFromGithubApi();
+
+        if (language == null || repos == null)
+            return 0;
+
+        return repos.stream().filter(item -> language.equalsIgnoreCase(item.getLanguage())).count();
+    }
+
+    public List<Item> getReposTrendListByLang(String language){
+
+        List<Item> repos = getReposFromGithubApi();
+
+        if (language == null || repos == null)
+            return Collections.EMPTY_LIST;
+
+        return repos.stream().filter(item -> language.equalsIgnoreCase(item.getLanguage())).collect(Collectors.toList());
+    }
 
     public String reposToString(List<Item> repos){
         if(repos.isEmpty())
